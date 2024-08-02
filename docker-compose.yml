@@ -1,0 +1,29 @@
+services:
+  
+  webapp_crocuscms_local:
+    image: webapp_crocuscms_local:1.0.0
+    container_name: webapp_crocuscms_local
+    build:
+      context: .
+    ports:
+      - 80:80
+      - 5173:5173
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - network_webapp
+
+  smtp:
+    platform: linux/x86_64
+    image: mailhog/mailhog
+    container_name: smtp_crocuscms_local
+    logging:
+      driver: 'none'
+    ports:
+      - 8003:1025
+      - 8100:8025
+    networks:
+      - network_webapp
+
+networks:
+  network_webapp:
