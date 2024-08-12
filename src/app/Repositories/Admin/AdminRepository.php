@@ -4,47 +4,58 @@ namespace App\Repositories\Admin;
 
 use App\Models\Admin\Admin;
 use App\Repositories\BaseRepository;
-use App\Repositories\Interfaces\CreateInterface;
-use App\Repositories\Interfaces\UpdateInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\QueryException;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
-class AdminRepository extends BaseRepository implements CreateInterface, UpdateInterface
+class AdminRepository extends BaseRepository
 {
 
+    private const PER_PAGE = 10;
+
+    /**
+     * @param array $data
+     * @return Model|null
+     */
     public function create(array $data): ?Model
     {
         Arr::set($data, 'password', Hash::make($data['password']));
 
-        try {
-            return $this->instance()->create($data);
-        } catch (QueryException  $exception) {
-            Log::error($exception->getMessage());
-        }
-        return null;
+        return parent::create($data);
     }
 
-    public function findByCondition(string $fieldName, string $value, string $operator = '='): ?Model
-    {
-        return $this->instance()
-            ->where($fieldName, $operator, $value)
-            ->first();
-    }
-
+    /**
+     * @param Model $instance
+     * @param array $data
+     * @return Model|null
+     */
     public function update(Model $instance, array $data): ?Model
     {
-        try {
-            return tap($instance, function ($model) use ($data) {
-                $model->fill($data);
-                $model->save();
-            });
-        } catch (QueryException $exception) {
-            Log::error($exception->getMessage());
+        if (Arr::has($data, 'password')) {
+            if (Arr::get($data, 'password', null) !== null) {
+                Arr::set($data, 'password', Hash::make($data['password']));
+            } else {
+                Arr::forget($data, 'password');
+            }
         }
-        return null;
+
+        return parent::update($instance, $data);
+    }
+
+    /**
+     * @return LengthAwarePaginator
+     */
+    public function paginate(): LengthAwarePaginator
+    {
+        $columns = ['id', 'name', 'login', 'is_active'];
+
+        return $this->instance()
+            ->select($columns)
+            ->where('login', '!=', Auth::guard('admin')->user()->login)
+            ->latest()
+            ->paginate(self::PER_PAGE);
     }
 
     /**
