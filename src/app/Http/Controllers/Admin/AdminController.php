@@ -11,6 +11,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -25,9 +26,9 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $admins = $this->adminRepository->paginate();
+        $admins = $this->adminRepository->paginate(excludeCurrentLogin: $request->user('admin')->login);
 
         return view('admin.admin.index', compact('admins'));
     }

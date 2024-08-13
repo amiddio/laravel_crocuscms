@@ -7,13 +7,12 @@ use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdminRepository extends BaseRepository
 {
 
-    private const PER_PAGE = 10;
+    public const PER_PAGE = 10;
 
     /**
      * @param array $data
@@ -34,7 +33,7 @@ class AdminRepository extends BaseRepository
     public function update(Model $instance, array $data): ?Model
     {
         if (Arr::has($data, 'password')) {
-            if (Arr::get($data, 'password', null) !== null) {
+            if (Arr::get($data, 'password')) {
                 Arr::set($data, 'password', Hash::make($data['password']));
             } else {
                 Arr::forget($data, 'password');
@@ -47,13 +46,13 @@ class AdminRepository extends BaseRepository
     /**
      * @return LengthAwarePaginator
      */
-    public function paginate(): LengthAwarePaginator
+    public function paginate(string $excludeCurrentLogin): LengthAwarePaginator
     {
         $columns = ['id', 'name', 'login', 'is_active'];
 
         return $this->instance()
             ->select($columns)
-            ->where('login', '!=', Auth::guard('admin')->user()->login)
+            ->where('login', '!=', $excludeCurrentLogin)
             ->latest()
             ->paginate(self::PER_PAGE);
     }
