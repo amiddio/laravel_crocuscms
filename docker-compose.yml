@@ -12,8 +12,10 @@ services:
       - ./src:/var/www/html
     depends_on:
       - mysql
+      - mysql_test
     links:
       - mysql
+      - mysql_test
     networks:
       - network_webapp
 
@@ -24,31 +26,48 @@ services:
     ports:
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: $${DB_PASSWORD}
-      MYSQL_DATABASE: $${DB_DATABASE}
-      MYSQL_USER: $${DB_USERNAME}
-      MYSQL_PASSWORD: $${DB_PASSWORD}
-      MYSQL_TCP_PORT: 3306
+      MYSQL_DATABASE: "crocuscms_local"
+      MYSQL_USER: "crocuscms_local"
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_PASSWORD: "password"
     command: --authentication_policy=mysql_native_password
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
       - network_webapp
 
-  smtp:
-    platform: linux/x86_64
-    image: mailhog/mailhog
-    container_name: smtp_crocuscms_local
-    logging:
-      driver: 'none'
+  mysql_test:
+    image: mysql:8.0.32
+    container_name: mysql_test_crocuscms_local
+    restart: always
     ports:
-      - 8003:1025
-      - 8100:8025
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: "crocuscms_local_test"
+      MYSQL_USER: "crocuscms_local_test"
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_PASSWORD: "password"
+    command: --authentication_policy=mysql_native_password
+    volumes:
+      - mysql_test_data:/var/lib/mysql
     networks:
       - network_webapp
+
+#  smtp:
+#    platform: linux/x86_64
+#    image: mailhog/mailhog
+#    container_name: smtp_crocuscms_local
+#    logging:
+#      driver: 'none'
+#    ports:
+#      - 8003:1025
+#      - 8100:8025
+#    networks:
+#      - network_webapp
 
 networks:
   network_webapp:
 
 volumes:
   mysql_data:
+  mysql_test_data:
