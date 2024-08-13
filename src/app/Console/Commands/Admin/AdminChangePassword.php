@@ -31,13 +31,16 @@ class AdminChangePassword extends BaseWithValidationCommand
     /**
      * Execute the console command.
      */
-    public function handle(AdminRepository $adminRepository): void
+    public function handle(AdminRepository $adminRepository): int
     {
         $login = $this->askValid(
             question: __('Enter login'),
             field: 'login',
             abort: true
         );
+        if ($login === null) {
+            return 0;
+        }
 
         $this->password = $this->askValid(
             question: __('Enter new password'),
@@ -50,7 +53,7 @@ class AdminChangePassword extends BaseWithValidationCommand
             secret: true
         );
 
-        $data = ['password' => Hash::make($this->password)];
+        $data = ['password' => $this->password];
 
         $admin = $adminRepository->findByCondition(fieldName: 'login', value: $login);
 
@@ -61,6 +64,8 @@ class AdminChangePassword extends BaseWithValidationCommand
         }
 
         $this->newLine();
+
+        return 1;
     }
 
     /**
@@ -71,7 +76,7 @@ class AdminChangePassword extends BaseWithValidationCommand
         return [
             'login' => ['required', 'exists:' . Admin::class . ',login'],
             'password' => ['required', Password::defaults()],
-            'password_confirmation' => ['required', Password::defaults(), "in:{$this->password}"],
+            'password_confirmation' => ['required', "in:{$this->password}"],
         ];
     }
 

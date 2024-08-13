@@ -26,7 +26,7 @@ abstract class BaseWithValidationCommand extends Command
             $this->error($message);
             if ($abort) {
                 $this->newLine();
-                exit;
+                return null;
             }
             return $this->askValid($question, $field, $abort, $secret);
         }

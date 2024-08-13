@@ -30,7 +30,7 @@ class AdminCreate extends BaseWithValidationCommand
     /**
      * Execute the console command.
      */
-    public function handle(AdminRepository $adminRepository): void
+    public function handle(AdminRepository $adminRepository): int
     {
         $name = $this->askValid(
             question: __('Enter admin name [press \'Enter\' to leave blank]'),
@@ -41,6 +41,9 @@ class AdminCreate extends BaseWithValidationCommand
             question: __('Enter admin login'),
             field: 'login'
         );
+        if ($login === null) {
+            return 0;
+        }
 
         $this->password = $this->askValid(
             question: __('Enter admin password'),
@@ -67,6 +70,8 @@ class AdminCreate extends BaseWithValidationCommand
         }
 
         $this->newLine();
+
+        return 1;
     }
 
     /**
@@ -78,7 +83,7 @@ class AdminCreate extends BaseWithValidationCommand
             'name' => ['nullable', 'min:3', 'max:30'],
             'login' => ['required', 'lowercase', 'min:3', 'max:30', 'unique:' . Admin::class . ',login'],
             'password' => ['required', Password::defaults()],
-            'password_confirmation' => ['required', Password::defaults(), "in:{$this->password}"],
+            'password_confirmation' => ['required', "in:{$this->password}"],
         ];
     }
 

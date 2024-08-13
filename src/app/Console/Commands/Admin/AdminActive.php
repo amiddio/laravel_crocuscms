@@ -24,13 +24,16 @@ class AdminActive extends BaseWithValidationCommand
     /**
      * Execute the console command.
      */
-    public function handle(AdminRepository $adminRepository): void
+    public function handle(AdminRepository $adminRepository): int
     {
         $login = $this->askValid(
             question: __('Enter login'),
             field: 'login',
             abort: true
         );
+        if ($login === null) {
+            return 0;
+        }
 
         $isActive = $this->choice(
             __('Set \':admin\' to active or inactive?', ['admin' => $login]),
@@ -52,6 +55,8 @@ class AdminActive extends BaseWithValidationCommand
         }
 
         $this->newLine();
+
+        return 1;
     }
 
     /**
