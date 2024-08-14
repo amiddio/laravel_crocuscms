@@ -15,7 +15,7 @@ class AdminObserver
 
     public function __construct()
     {
-        $this->storage_dir = config('custom.path.admin_avatar');
+        $this->storage_dir = config('admin.path.admin_avatar');
     }
 
     /**

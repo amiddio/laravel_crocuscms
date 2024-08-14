@@ -5,17 +5,13 @@
 
         <div class="text-right space-x-4">
             <a
-                href="{{ url()->previous() }}"
-                class="text-secondary transition duration-150 ease-in-out hover:text-secondary-600 focus:text-secondary-600 active:text-secondary-700"
-            >{{ __('Back') }}</a>
-            <a
                 href="{{ route('admin.admins.create') }}"
                 class="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
             >{{ __('Create') }}</a>
         </div>
         <hr class="mt-3 mb-6" />
 
-        @if($admins)
+        @if($admins->count() > 0)
             <div class="overflow-x-auto bg-white dark:bg-neutral-700">
 
                 <!-- Table -->
@@ -69,6 +65,8 @@
                 </table>
 
             </div>
+        @else
+            <p>{{ __('Admins not found') }}</p>
         @endif
 
     </x-slot>

@@ -16,7 +16,7 @@
         >
             <span class="sr-only">User menu</span>
             @isset(auth()->user()->avatar)
-                <img src="{{ Storage::url(config('custom.path.admin_avatar') . '/' . auth()->user()->avatar) }}" alt="{{ auth()->user()->name }}" class="w-12 h-12 rounded-full" />
+                <img src="{{ Storage::url(config('admin.path.admin_avatar') . '/' . auth()->user()->avatar) }}" alt="{{ auth()->user()->name }}" class="w-12 h-12 rounded-full" />
             @else
                 <img class="w-12 h-12 rounded-full" src="{{ asset('admin/images/noavatar.jpg') }}" alt="" />
             @endisset

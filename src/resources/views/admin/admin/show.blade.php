@@ -50,7 +50,7 @@
                         <tr class="border-b dark:border-neutral-600">
                             <th scope="row" class="px-6 py-4">{{ __('Avatar') }}</th>
                             <td class="px-6 py-4">
-                                <img src="{{ Storage::url(config('custom.path.admin_avatar') . '/' . $admin->avatar) }}" alt="{{ $admin->login }}" class="w-12 h-12 rounded-full" />
+                                <img src="{{ Storage::url(config('admin.path.admin_avatar') . '/' . $admin->avatar) }}" alt="{{ $admin->login }}" class="w-12 h-12 rounded-full" />
                             </td>
                         </tr>
                     @endif

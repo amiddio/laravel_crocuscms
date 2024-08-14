@@ -13,7 +13,7 @@ class AuthenticationTest extends TestCase
     {
         parent::setUp();
 
-        self::$adminPrefix = config('custom.admin_panel_prefix');
+        self::$adminPrefix = config('admin.admin_panel_prefix');
     }
 
     public function testLoginScreenCanBeRendered(): void
