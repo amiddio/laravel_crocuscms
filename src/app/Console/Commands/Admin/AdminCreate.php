@@ -64,6 +64,11 @@ class AdminCreate extends BaseWithValidationCommand
             $roles->toArray()
         );
         $role = $adminRoleRepository->findByCondition(fieldName: 'name', value: $adminRole);
+        if (!$role) {
+            $this->error(__("Admin role ':role' not found", ['role' => $adminRole]));
+            $this->newLine();
+            return 0;
+        }
 
         $data = [
             'name' => $name,

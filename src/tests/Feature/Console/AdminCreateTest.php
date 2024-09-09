@@ -3,6 +3,8 @@
 namespace Tests\Feature\Console;
 
 use Database\Factories\Admin\AdminFactory;
+use Database\Factories\Admin\AdminRoleFactory;
+use Database\Seeders\AdminRoleSeeder;
 use Tests\TestCase;
 
 class AdminCreateTest extends TestCase
@@ -13,11 +15,14 @@ class AdminCreateTest extends TestCase
     {
         parent::setUp();
 
+        $this->seed(AdminRoleSeeder::class);
+
         AdminFactory::new()->create([
             'name' => 'John Dow',
             'login' => 'sadmin',
             'password' => 'Qwerty#2024$',
             'is_active' => true,
+            'admin_role_id' => null,
         ]);
     }
 
@@ -28,6 +33,7 @@ class AdminCreateTest extends TestCase
             ->expectsQuestion(__('Enter admin login'), 'admin')
             ->expectsQuestion(__('Enter admin password'), 'Qwerty#2021$')
             ->expectsQuestion(__('Repeat password'), 'Qwerty#2021$')
+            ->expectsQuestion(__('Choose admin Role'), config('admin.super_admin_role_name'))
             ->expectsOutput(__('Admin created successfully!'))
             ->assertExitCode(1);
 
@@ -51,6 +57,7 @@ class AdminCreateTest extends TestCase
             ->expectsQuestion(__('Enter admin login'), 'admin')
             ->expectsQuestion(__('Enter admin password'), 'Qwerty#2021$')
             ->expectsQuestion(__('Repeat password'), 'Qwerty#2021$')
+            ->expectsQuestion(__('Choose admin Role'), config('admin.super_admin_role_name'))
             ->expectsOutput(__('Admin created successfully!'))
             ->assertExitCode(1);
 
@@ -70,6 +77,7 @@ class AdminCreateTest extends TestCase
             ->expectsQuestion(__('Repeat password'), 'Qwerty#2021$$')
             ->expectsOutput(__('The entered passwords must match.'))
             ->expectsQuestion(__('Repeat password'), 'Qwerty#2021$')
+            ->expectsQuestion(__('Choose admin Role'), config('admin.super_admin_role_name'))
             ->expectsOutput(__('Admin created successfully!'))
             ->assertExitCode(1);
 
