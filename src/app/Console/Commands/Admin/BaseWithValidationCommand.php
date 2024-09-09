@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands\Admin;
 
+use App\Repositories\Admin\AdminRoleRepository;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Collection;
 
 abstract class BaseWithValidationCommand extends Command
 {
@@ -50,6 +52,22 @@ abstract class BaseWithValidationCommand extends Command
         return $validator->fails()
             ? $validator->errors()->first($fieldName)
             : null;
+    }
+
+    /**
+     * @param AdminRoleRepository $adminRoleRepository
+     * @return Collection|int
+     */
+    protected function getRoles(AdminRoleRepository $adminRoleRepository): Collection|int
+    {
+        $roles = $adminRoleRepository->list();
+        if ($roles->isEmpty()) {
+            $this->error(__("Admin role(s) not found! Run artisan seed command 'db:seed AdminRoleSeeder'"));
+            $this->newLine();
+            return 0;
+        }
+
+        return $roles;
     }
 
     /**
