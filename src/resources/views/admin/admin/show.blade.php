@@ -43,6 +43,10 @@
                         <td class="px-6 py-4">{{ $admin->login }}</td>
                     </tr>
                     <tr class="border-b dark:border-neutral-600">
+                        <th scope="row" class="px-6 py-4">{{ __('Role') }}</th>
+                        <td class="px-6 py-4">{{ $admin->role->name }}</td>
+                    </tr>
+                    <tr class="border-b dark:border-neutral-600">
                         <th scope="row" class="px-6 py-4">{{ __('Name') }}</th>
                         <td class="px-6 py-4">{{ $admin->name }}</td>
                     </tr>

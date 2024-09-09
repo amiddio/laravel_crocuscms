@@ -4,6 +4,7 @@ namespace App\Console\Commands\Admin;
 
 use App\Models\Admin\Admin;
 use App\Repositories\Admin\AdminRepository;
+use App\Repositories\Admin\AdminRoleRepository;
 use Illuminate\Validation\Rules\Password;
 
 class AdminCreate extends BaseWithValidationCommand
@@ -30,8 +31,15 @@ class AdminCreate extends BaseWithValidationCommand
     /**
      * Execute the console command.
      */
-    public function handle(AdminRepository $adminRepository): int
+    public function handle(AdminRepository $adminRepository, AdminRoleRepository $adminRoleRepository): int
     {
+        $roles = $adminRoleRepository->list();
+        if ($roles->isEmpty()) {
+            $this->error(__("Admin role(s) not found! Run artisan seed command 'db:seed AdminRoleSeeder'"));
+            $this->newLine();
+            return 0;
+        }
+
         $name = $this->askValid(
             question: __('Enter admin name [press \'Enter\' to leave blank]'),
             field: 'name'
@@ -56,11 +64,18 @@ class AdminCreate extends BaseWithValidationCommand
             secret: true
         );
 
+        $adminRole = $this->choice(
+            __('Choose admin Role'),
+            $roles->toArray()
+        );
+        $role = $adminRoleRepository->findByCondition(fieldName: 'name', value: $adminRole);
+
         $data = [
             'name' => $name,
             'login' => $login,
             'password' => $this->password,
             'is_active' => true,
+            'admin_role_id' => $role->id,
         ];
 
         if (!$adminRepository->create($data)) {

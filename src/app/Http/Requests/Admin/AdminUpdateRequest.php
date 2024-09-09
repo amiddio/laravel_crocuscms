@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use App\Models\Admin\Admin;
+use App\Models\Admin\AdminRole;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
@@ -28,6 +29,7 @@ class AdminUpdateRequest extends FormRequest
             'password' => ['nullable', 'confirmed', Password::defaults()],
             'password_confirmation' => ['nullable'],
             'is_active' => ['present', 'in:0,1'],
+            'admin_role_id' => ['required', 'exists:'.AdminRole::class.',id'],
         ];
     }
 
@@ -41,6 +43,8 @@ class AdminUpdateRequest extends FormRequest
             'name.max' => 'The name must not be greater than :max characters.',
             'password.required' => 'The password is required.',
             'password_confirmation.required' => 'The confirm password is required.',
+            'admin_role_id.required' => 'Admin role is required.',
+            'admin_role_id.exists' => 'Selected admin role is not exist.',
         ];
     }
 }

@@ -53,10 +53,10 @@
                 </main>
             </div>
 
-            <!-- Main footer -->
-            <footer class="flex justify-center items-center p-4 bg-white border-t dark:bg-darker dark:border-primary-darker">
-                <div class="text-gray-400 text-sm">{!! $copyright !!}</div>
-            </footer>
+{{--            <!-- Main footer -->--}}
+{{--            <footer class="flex justify-center items-center p-4 bg-white border-t dark:bg-darker dark:border-primary-darker">--}}
+{{--                <div class="text-gray-400 text-sm">{!! $copyright !!}</div>--}}
+{{--            </footer>--}}
         </div>
 
     </div>

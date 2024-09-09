@@ -48,10 +48,8 @@ class AdminRepository extends BaseRepository
      */
     public function paginate(string $excludeCurrentLogin): LengthAwarePaginator
     {
-        $columns = ['id', 'name', 'login', 'is_active'];
-
         return $this->instance()
-            ->select($columns)
+            ->with('role')
             ->where('login', '!=', $excludeCurrentLogin)
             ->latest()
             ->paginate(self::PER_PAGE);

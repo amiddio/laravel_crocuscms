@@ -35,6 +35,15 @@
             <x-admin.input-row type="text" :name="'name'" :label="__('Name')" :value="old('name', $admin->name)" />
             <x-admin.input-row type="password" :name="'password'" :label="__('Password')" />
             <x-admin.input-row type="password" :name="'password_confirmation'" :label="__('Confirm Password')" />
+            <div class="mb-6">
+                <label for="roles" class="block mb-2 text-gray-900 dark:text-white">{{ __('Select a role') }} <span class="text-red-800">*</span></label>
+                <select id="roles" name="admin_role_id" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    @foreach($roles as $id=>$name)
+                        <option value="{{ $id }}" @if($id == $admin->admin_role_id) selected @endif>{{ $name }}</option>
+                    @endforeach
+                </select>
+                <x-admin.input-error :messages="$errors->get('admin_role_id')"/>
+            </div>
             <x-admin.checkbox :name="'is_active'" :label="__('Is active?')" :checked="old('is_active', (bool)$admin->is_active)" />
             <x-admin.button-primary :label="__('Save')"/>
         </form>

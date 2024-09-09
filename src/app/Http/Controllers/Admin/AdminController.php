@@ -6,7 +6,9 @@ use App\Enums\AlertColor;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminCreateRequest;
 use App\Http\Requests\Admin\AdminUpdateRequest;
+use App\Models\Admin\Admin;
 use App\Repositories\Admin\AdminRepository;
+use App\Repositories\Admin\AdminRoleRepository;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
@@ -19,9 +21,10 @@ class AdminController extends Controller
     /**
      * @param AdminRepository $adminRepository
      */
-    public function __construct(protected AdminRepository $adminRepository)
-    {
-    }
+    public function __construct(
+        protected AdminRepository $adminRepository,
+        protected AdminRoleRepository $adminRoleRepository
+    ) {}
 
     /**
      * Display a listing of the resource.
@@ -65,7 +68,9 @@ class AdminController extends Controller
      */
     public function create(): View
     {
-        return view('admin.admin.create');
+        $roles = $this->adminRoleRepository->list();
+
+        return view('admin.admin.create', compact('roles'));
     }
 
     /**
@@ -81,7 +86,9 @@ class AdminController extends Controller
 
         Gate::authorize('view', $admin);
 
-        return view('admin.admin.edit', compact('admin'));
+        $roles = $this->adminRoleRepository->list();
+
+        return view('admin.admin.edit', compact('admin', 'roles'));
     }
 
     /**

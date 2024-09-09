@@ -27,6 +27,9 @@
                             {{ __('Name') }}
                         </th>
                         <th scope="col" class="px-6 py-4">
+                            {{ __('Role') }}
+                        </th>
+                        <th scope="col" class="px-6 py-4">
                             {{ __('Login') }}
                         </th>
                         <th scope="col" class="px-6 py-4">
@@ -44,6 +47,7 @@
                     <tr class="border-b dark:border-neutral-600">
                         <th scope="row" class="px-6 py-4">{{ $admin->id }}</th>
                         <td class="px-6 py-4">{{ $admin->name }}</td>
+                        <td class="px-6 py-4">{{ $admin->role->name }}</td>
                         <td class="px-6 py-4">{{ $admin->login }}</td>
                         <td class="px-6 py-4">
                             <x-admin.is-active :value="$admin->is_active" />

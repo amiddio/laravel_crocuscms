@@ -5,11 +5,12 @@ namespace App\Models\Admin;
 use App\Observers\Admin\AdminObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string|null $name
@@ -52,6 +53,7 @@ class Admin extends Authenticatable
         'login',
         'password',
         'is_active',
+        'admin_role_id',
     ];
 
     /**
@@ -74,7 +76,16 @@ class Admin extends Authenticatable
         'login' => 'string',
         'password' => 'hashed',
         'is_active' => 'boolean',
+        'admin_role_id' => 'integer',
     ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(AdminRole::class, 'admin_role_id');
+    }
 
     /**
      * @return void

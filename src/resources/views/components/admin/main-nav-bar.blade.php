@@ -61,13 +61,13 @@
                     @isset($item['items'])
                     <div x-show="open" class="mt-2 space-y-2 px-7" role="menu" arial-label="{{ __($item['name']) }}">
                         @foreach($item['items'] as $subItem)
-                        <a
-                            href="{{ route($subItem['route']) }}"
-                            role="menuitem"
-                            class="block p-2 text-sm {{ request()->route()->named($subItem['route']) ? 'text-gray-700 dark:text-light' : 'text-gray-400 dark:text-gray-400' }} transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
-                        >
-                            {{ __($subItem['name']) }}
-                        </a>
+                            <a
+                                href="{{ route($subItem['route']) }}"
+                                role="menuitem"
+                                class="block p-2 text-sm {{ request()->route()->named($subItem['route']) ? 'text-gray-700 dark:text-light' : 'text-gray-400 dark:text-gray-400' }} transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
+                            >
+                                {{ __($subItem['name']) }}
+                            </a>
                         @endforeach
                     </div>
                     @endisset
