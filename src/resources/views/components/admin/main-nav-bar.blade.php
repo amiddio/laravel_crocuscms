@@ -6,7 +6,7 @@
 
             @foreach($items as $key => $item)
 
-                <div @isset($item['items']) {!! request()->route()->named($item['child_routes']) ? 'x-data="{ isActive: true, open: true }"' : 'x-data="{ isActive: false, open: false }"' !!} @endisset>
+                <div @isset($item['items']) {!! $item['is_active'] ? 'x-data="{ isActive: true, open: true }"' : 'x-data="{ isActive: false, open: false }"' !!} @endisset>
                     {{--                <!-- active classes 'bg-primary-100 dark:bg-primary' -->--}}
                     {{--                <!-- active & hover classes 'text-gray-700 dark:text-light' -->--}}
                     {{--                <!-- inActive classes 'text-gray-400 dark:text-gray-400' -->--}}
@@ -20,9 +20,9 @@
                         role="button"
                         aria-haspopup="true"
                         @isset($item['items'])
-                        @click="$event.preventDefault(); open = !open"
-                        :class="{ 'bg-primary-100 dark:bg-primary': isActive || open }"
-                        :aria-expanded="(open || isActive) ? 'true' : 'false'"
+                            @click="$event.preventDefault(); open = !open"
+                            :class="{ 'bg-primary-100 dark:bg-primary': isActive || open }"
+                            :aria-expanded="(open || isActive) ? 'true' : 'false'"
                         @endisset
                     >
                         <span aria-hidden="true">
@@ -64,7 +64,7 @@
                             <a
                                 href="{{ route($subItem['route']) }}"
                                 role="menuitem"
-                                class="block p-2 text-sm {{ request()->route()->named($subItem['route']) ? 'text-gray-700 dark:text-light' : 'text-gray-400 dark:text-gray-400' }} transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
+                                class="block p-2 text-sm {{ $subItem['is_active'] ? 'text-gray-700 dark:text-light' : 'text-gray-400 dark:text-gray-400' }} transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
                             >
                                 {{ __($subItem['name']) }}
                             </a>

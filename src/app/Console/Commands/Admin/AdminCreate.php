@@ -33,12 +33,7 @@ class AdminCreate extends BaseWithValidationCommand
      */
     public function handle(AdminRepository $adminRepository, AdminRoleRepository $adminRoleRepository): int
     {
-        $roles = $adminRoleRepository->list();
-        if ($roles->isEmpty()) {
-            $this->error(__("Admin role(s) not found! Run artisan seed command 'db:seed AdminRoleSeeder'"));
-            $this->newLine();
-            return 0;
-        }
+        $roles = $this->getRoles($adminRoleRepository);
 
         $name = $this->askValid(
             question: __('Enter admin name [press \'Enter\' to leave blank]'),

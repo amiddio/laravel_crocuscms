@@ -4,6 +4,7 @@ namespace App\View\Components\Admin;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
@@ -34,9 +35,18 @@ class MainNavBar extends Component
     private function getChildRoutes(array &$data): void
     {
         foreach ($data as &$item) {
+            $item['is_active'] = false;
             if (isset($item['items'])) {
                 $routes = data_get($item, 'items.*.route');
                 Arr::set($item, 'child_routes', $routes);
+                foreach ($item['items'] as &$subItem) {
+                    $subItem['is_active'] = request()->is(config('admin.admin_panel_prefix').'/'.$subItem['uri'].'*');
+                    if ($subItem['is_active']) {
+                        $item['is_active'] = true;
+                    }
+                }
+            } else {
+                $item['is_active'] = request()->is(config('admin.admin_panel_prefix').'/'.$item['uri'].'*');
             }
         }
     }

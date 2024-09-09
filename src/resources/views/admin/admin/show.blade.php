@@ -39,12 +39,12 @@
                         <td class="px-6 py-4 w-3/4 text-base">{{ $admin->id }}</td>
                     </tr>
                     <tr class="border-b dark:border-neutral-600">
-                        <th scope="row" class="px-6 py-4">{{ __('Login') }}</th>
-                        <td class="px-6 py-4">{{ $admin->login }}</td>
+                        <th scope="row" class="px-6 py-4">{{ __('Role') }}</th>
+                        <td class="px-6 py-4">@if($admin->role) {{ $admin->role->name }} @endif</td>
                     </tr>
                     <tr class="border-b dark:border-neutral-600">
-                        <th scope="row" class="px-6 py-4">{{ __('Role') }}</th>
-                        <td class="px-6 py-4">{{ $admin->role->name }}</td>
+                        <th scope="row" class="px-6 py-4">{{ __('Login') }}</th>
+                        <td class="px-6 py-4">{{ $admin->login }}</td>
                     </tr>
                     <tr class="border-b dark:border-neutral-600">
                         <th scope="row" class="px-6 py-4">{{ __('Name') }}</th>

@@ -24,10 +24,10 @@
                             {{ __('#Id') }}
                         </th>
                         <th scope="col" class="px-6 py-4">
-                            {{ __('Name') }}
+                            {{ __('Role') }}
                         </th>
                         <th scope="col" class="px-6 py-4">
-                            {{ __('Role') }}
+                            {{ __('Name') }}
                         </th>
                         <th scope="col" class="px-6 py-4">
                             {{ __('Login') }}
@@ -46,8 +46,8 @@
                     @foreach($admins as $admin)
                     <tr class="border-b dark:border-neutral-600">
                         <th scope="row" class="px-6 py-4">{{ $admin->id }}</th>
+                        <td class="px-6 py-4">@if($admin->role) {{ $admin->role->name }} @endif</td>
                         <td class="px-6 py-4">{{ $admin->name }}</td>
-                        <td class="px-6 py-4">{{ $admin->role->name }}</td>
                         <td class="px-6 py-4">{{ $admin->login }}</td>
                         <td class="px-6 py-4">
                             <x-admin.is-active :value="$admin->is_active" />
