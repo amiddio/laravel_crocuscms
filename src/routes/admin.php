@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminUpdateController;
 use App\Http\Controllers\Admin\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\SystemVersionController;
 use App\Http\Middleware\AdminPermission;
 use Illuminate\Support\Facades\Route;
@@ -43,5 +44,7 @@ Route::prefix(config('admin.admin_panel_prefix'))->name('admin.')->group(functio
 
         Route::get('admin_permissions', [AdminPermissionController::class, 'index'])->name('admin_permissions');
         Route::patch('admin_permissions/{roleId}', [AdminPermissionController::class, 'update'])->name('admin_permissions.update');
+
+        Route::resource('pages', PageController::class)->except('show');
     });
 });
