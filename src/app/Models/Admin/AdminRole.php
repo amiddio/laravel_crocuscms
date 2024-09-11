@@ -9,6 +9,25 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Admin\AdminPermission> $permissions
+ * @property-read int|null $permissions_count
+ * @method static \Database\Factories\Admin\AdminRoleFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminRole newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminRole newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminRole query()
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminRole whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminRole whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminRole whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminRole whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class AdminRole extends Model
 {
     use HasFactory;
