@@ -73,7 +73,9 @@ class PageController extends Controller
             abort(404);
         }
 
-        return view('admin.page.edit', compact('page'));
+        $translates = $page->getTranslationsArray();
+
+        return view('admin.page.edit', compact('page', 'translates'));
     }
 
     /**

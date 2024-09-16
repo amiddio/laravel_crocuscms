@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
@@ -29,9 +31,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Page whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Page extends Model
+class Page extends Model implements TranslatableContract
 {
-    use HasFactory;
+    use HasFactory, Translatable;
+
+    /**
+     * @var array<int, string>
+     */
+    public array $translatedAttributes = ['title', 'intro', 'content'];
 
     /**
      * The attributes that are mass assignable.
@@ -58,4 +65,5 @@ class Page extends Model
         'content' => 'string',
         'is_active' => 'boolean',
     ];
+
 }
