@@ -3,10 +3,9 @@
 namespace App\Repositories\Admin;
 
 use App\Models\Admin\AdminRole;
-use App\Repositories\BaseRepository;
 use Illuminate\Support\Collection;
 
-class AdminRoleRepository extends BaseRepository
+class AdminRoleRepository extends BaseAdminRepository
 {
 
     public function all()

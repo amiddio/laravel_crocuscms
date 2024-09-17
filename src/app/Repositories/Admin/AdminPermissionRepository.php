@@ -3,14 +3,13 @@
 namespace App\Repositories\Admin;
 
 use App\Models\Admin\AdminPermission;
-use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
-class AdminPermissionRepository extends BaseRepository
+class AdminPermissionRepository extends BaseAdminRepository
 {
 
     public function getAll(): Collection

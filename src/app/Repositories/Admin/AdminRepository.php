@@ -3,13 +3,12 @@
 namespace App\Repositories\Admin;
 
 use App\Models\Admin\Admin;
-use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 
-class AdminRepository extends BaseRepository
+class AdminRepository extends BaseAdminRepository
 {
 
     public const PER_PAGE = 10;
