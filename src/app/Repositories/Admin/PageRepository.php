@@ -3,10 +3,9 @@
 namespace App\Repositories\Admin;
 
 use App\Models\Page;
-use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 
-class PageRepository extends BaseRepository
+class PageRepository extends BaseAdminRepository
 {
 
     public function all(): Collection
