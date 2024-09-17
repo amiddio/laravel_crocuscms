@@ -23,7 +23,7 @@
 
         <div class="flex flex-col flex-1 min-h-screen overflow-x-hidden overflow-y-auto">
             <!-- Navbar -->
-            <header class="relative flex-shrink-0 bg-white dark:bg-darker">
+            <header class="sticky flex-shrink-0 bg-white dark:bg-darker">
                 <div class="flex items-center justify-between px-4 py-2 border-b dark:border-primary-darker">
 
                     @include('admin.includes.mobile-menu-button')
@@ -42,22 +42,23 @@
                 </div>
             </header>
 
-            <div class="flex w-full p-4">
-                <h1 class="text-3xl font-semibold">{{ $page_title }}</h1>
-            </div>
-            <div class="w-full h-full p-4" style="max-width: 1024px;">
-                <main>
-                    <div class="rounded-md overflow-hidden shadow-lg p-4 bg-white">
-                        <x-admin.alert/>
-                        {{ $content }}
-                    </div>
-                </main>
+            <div class="flex-grow p-4">
+                <div class="flex w-full mb-4">
+                    <h1 class="text-3xl font-semibold">{{ $page_title }}</h1>
+                </div>
+                <div class="w-full h-full" style="max-width: 1024px;">
+                    <main>
+                        <div class="rounded-md overflow-hidden shadow-lg p-4 bg-white">
+                            <x-admin.alert/>
+                            {{ $content }}
+                        </div>
+                    </main>
+                </div>
             </div>
 
-            {{--            <!-- Main footer -->--}}
-            {{--            <footer class="flex justify-center items-center p-4 bg-white border-t dark:bg-darker dark:border-primary-darker">--}}
-            {{--                <div class="text-gray-400 text-sm">{!! $copyright !!}</div>--}}
-            {{--            </footer>--}}
+            <footer class="sticky bottom-0 p-4 bg-white border-t dark:bg-darker dark:border-primary-darker">
+                <div class="text-gray-400 text-sm">{!! $copyright !!}</div>
+            </footer>
         </div>
 
     </div>
