@@ -9,8 +9,8 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/css/tw-elements.min.css" />
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/css/tw-elements.min.css"/>
 
     @vite(['resources/css/app.css', 'resources/css/admin-app.css'])
 </head>
@@ -19,7 +19,7 @@
 <div x-data="setup()" x-init="$refs.loading.classList.add('hidden'); setColors(color);">
     <div class="flex h-screen antialiased text-gray-900 bg-gray-100 dark:bg-dark dark:text-light">
 
-        <x-admin-main-nav-bar />
+        <x-admin-desktop-nav-bar/>
 
         <div class="flex flex-col flex-1 min-h-screen overflow-x-hidden overflow-y-auto">
             <!-- Navbar -->
@@ -30,13 +30,14 @@
 
                     <!-- Brand -->
                     <a href="#" class="text-2xl font-bold tracking-wider text-primary-dark dark:text-light">
-                        <img class="w-10 h-10 inline-block" src="{{ asset('admin/images/logo.png') }}" alt="{{ config('app.name') }}"/>
+                        <img class="w-10 h-10 inline-block" src="{{ asset('admin/images/logo.png') }}"
+                             alt="{{ config('app.name') }}"/>
                         <span class="inline-block ml-2">{{ config('app.name') }}</span>
                     </a>
 
                     @include('admin.includes.mobile-sub-menu-button')
                     @include('admin.includes.desktop-nav')
-                    @include('admin.includes.mobile-nav')
+                    <x-admin-mobile-nav-bar/>
 
                 </div>
             </header>
@@ -47,16 +48,16 @@
             <div class="w-full h-full p-4" style="max-width: 1024px;">
                 <main>
                     <div class="rounded-md overflow-hidden shadow-lg p-4 bg-white">
-                    <x-admin.alert />
-                    {{ $content }}
+                        <x-admin.alert/>
+                        {{ $content }}
                     </div>
                 </main>
             </div>
 
-{{--            <!-- Main footer -->--}}
-{{--            <footer class="flex justify-center items-center p-4 bg-white border-t dark:bg-darker dark:border-primary-darker">--}}
-{{--                <div class="text-gray-400 text-sm">{!! $copyright !!}</div>--}}
-{{--            </footer>--}}
+            {{--            <!-- Main footer -->--}}
+            {{--            <footer class="flex justify-center items-center p-4 bg-white border-t dark:bg-darker dark:border-primary-darker">--}}
+            {{--                <div class="text-gray-400 text-sm">{!! $copyright !!}</div>--}}
+            {{--            </footer>--}}
         </div>
 
     </div>

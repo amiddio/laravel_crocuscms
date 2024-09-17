@@ -4,7 +4,8 @@ namespace App\Providers;
 
 use App\View\Components\Admin\AdminAppLayout;
 use App\View\Components\Admin\AdminGuestLayout;
-use App\View\Components\Admin\MainNavBar;
+use App\View\Components\Admin\DesktopNavBar;
+use App\View\Components\Admin\MobileNavBar;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -34,6 +35,7 @@ class ViewServiceProvider extends ServiceProvider
 
         Blade::component('admin-app-layout', AdminAppLayout::class);
         Blade::component('admin-guest-layout', AdminGuestLayout::class);
-        Blade::component('admin-main-nav-bar', MainNavBar::class);
+        Blade::component('admin-desktop-nav-bar', DesktopNavBar::class);
+        Blade::component('admin-mobile-nav-bar', MobileNavBar::class);
     }
 }

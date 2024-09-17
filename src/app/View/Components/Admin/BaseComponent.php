@@ -2,37 +2,18 @@
 
 namespace App\View\Components\Admin;
 
-use Closure;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
-class MainNavBar extends Component
+abstract class BaseComponent extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
-    {
-        //
-    }
 
     /**
-     * Get the view / contents that represent the component.
+     * @param array $data
+     * @return void
      */
-    public function render(): View|Closure|string
-    {
-        $items = config('admin.main_nav_bar');
-
-        $this->getChildRoutes($items);
-        $this->removeNotAllowedItems($items);
-
-        return view('components.admin.main-nav-bar', compact('items'));
-    }
-
-    private function getChildRoutes(array &$data): void
+    protected function getChildRoutes(array &$data): void
     {
         foreach ($data as &$item) {
             $item['is_active'] = false;
@@ -40,21 +21,28 @@ class MainNavBar extends Component
                 $routes = data_get($item, 'items.*.route');
                 Arr::set($item, 'child_routes', $routes);
                 foreach ($item['items'] as &$subItem) {
-                    $subItem['is_active'] = request()->is(config('admin.admin_panel_prefix').'/'.$subItem['uri'].'*');
+                    $subItem['is_active'] = request()->is(
+                        config('admin.admin_panel_prefix') . '/' . $subItem['uri'] . '*'
+                    );
                     if ($subItem['is_active']) {
                         $item['is_active'] = true;
                     }
                 }
             } else {
-                $item['is_active'] = request()->is(config('admin.admin_panel_prefix').'/'.$item['uri'].'*');
+                $item['is_active'] = request()->is(config('admin.admin_panel_prefix') . '/' . $item['uri'] . '*');
             }
         }
     }
 
-    private function removeNotAllowedItems(array &$data): void
+    /**
+     * @param array $data
+     * @return void
+     */
+    protected function removeNotAllowedItems(array &$data): void
     {
         if (Auth::guard('admin')->user()->role->name != config('admin.super_admin_role_name')) {
-            $allowedRoutes = Auth::guard('admin')->user()->role->permissions()->where('method', 'get')->get(['route'])->pluck('route')->toArray();
+            $allowedRoutes = Auth::guard('admin')->user()->role->permissions()->where('method', 'get')->get(['route']
+            )->pluck('route')->toArray();
             foreach ($data as $key => &$item) {
                 if (isset($item['items'])) {
                     foreach ($item['items'] as $keySub => &$itemSub) {
