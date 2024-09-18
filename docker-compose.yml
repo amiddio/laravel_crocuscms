@@ -53,17 +53,11 @@ services:
     networks:
       - network_webapp
 
-#  smtp:
-#    platform: linux/x86_64
-#    image: mailhog/mailhog
-#    container_name: smtp_crocuscms_local
-#    logging:
-#      driver: 'none'
-#    ports:
-#      - 8003:1025
-#      - 8100:8025
-#    networks:
-#      - network_webapp
+  redis:
+    image: redis:7.0.5-alpine
+    hostname: redis
+    networks:
+      - network_webapp
 
 networks:
   network_webapp:
