@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\AlertColor;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PageCreateRequest;
 use App\Http\Requests\Admin\PageUpdateRequest;
 use App\Repositories\Admin\PageRepository;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Psr\SimpleCache\InvalidArgumentException;
 
-class PageController extends Controller
+class PageController extends BaseAdminController
 {
 
     public function __construct(
         protected PageRepository $pageRepository
-    ) {}
+    ) {
+    }
 
     /**
      * Display a listing of the resource.
@@ -26,14 +26,6 @@ class PageController extends Controller
         $pages = $this->pageRepository->all();
 
         return view('admin.page.index', compact('pages'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): View
-    {
-        return view('admin.page.create');
     }
 
     /**
@@ -64,6 +56,14 @@ class PageController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create(): View
+    {
+        return view('admin.page.create');
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id): View
@@ -80,6 +80,7 @@ class PageController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @throws InvalidArgumentException
      */
     public function update(PageUpdateRequest $request, string $id): RedirectResponse
     {
@@ -91,7 +92,8 @@ class PageController extends Controller
         $validated = $request->validated();
 
         $page = $this->pageRepository->update($page, $validated);
-        if ($page->wasChanged()) {
+        if ($page->wasChanged() || $page->translationWasChanged()) {
+            self::cacheDelete(keys: self::getTranslationCacheKeys(prefix: $page->name));
             self::setAlert(
                 type: AlertColor::SUCCESS,
                 message: __(
@@ -106,6 +108,7 @@ class PageController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @throws InvalidArgumentException
      */
     public function destroy(string $id): RedirectResponse
     {
@@ -115,6 +118,7 @@ class PageController extends Controller
         }
 
         if ($this->pageRepository->delete($page)) {
+            self::cacheDelete(keys: self::getTranslationCacheKeys(prefix: $page->name));
             self::setAlert(
                 type: AlertColor::SUCCESS,
                 message: __(

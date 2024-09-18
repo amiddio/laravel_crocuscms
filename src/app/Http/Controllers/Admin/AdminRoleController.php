@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\AlertColor;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminRoleCreateRequest;
 use App\Http\Requests\Admin\AdminRoleUpdateRequest;
 use App\Repositories\Admin\AdminRoleRepository;
@@ -12,12 +11,13 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
-class AdminRoleController extends Controller
+class AdminRoleController extends BaseAdminController
 {
 
     public function __construct(
         protected AdminRoleRepository $adminRoleRepository
-    ) {}
+    ) {
+    }
 
     /**
      * Display a listing of the resource.
@@ -27,14 +27,6 @@ class AdminRoleController extends Controller
         $roles = $this->adminRoleRepository->all();
 
         return view('admin.admin_role.index', compact('roles'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create(): View
-    {
-        return view('admin.admin_role.create');
     }
 
     /**
@@ -62,6 +54,14 @@ class AdminRoleController extends Controller
         }
 
         return redirect()->route('admin.admin_roles.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(): View
+    {
+        return view('admin.admin_role.create');
     }
 
     /**

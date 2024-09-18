@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class SystemVersionController extends Controller
+class SystemVersionController extends BaseAdminController
 {
     public function __invoke(Request $request): View
     {

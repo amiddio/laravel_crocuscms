@@ -9,7 +9,7 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $name
@@ -82,9 +82,31 @@ class Page extends Model implements TranslatableContract
         'is_active' => 'boolean',
     ];
 
+    /**
+     * @param Builder $query
+     * @return void
+     */
     public function scopeActive(Builder $query): void
     {
         $query->where('is_active', true);
+    }
+
+    /**
+     * @return bool
+     */
+    public function translationWasChanged(): bool
+    {
+        if (!$this->translations) {
+            return false;
+        }
+
+        foreach ($this->translations as $item) {
+            if ($item->wasChanged()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\AlertColor;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminAccountUpdateRequest;
 use App\Repositories\Admin\AdminRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class AdminUpdateController extends Controller
+class AdminUpdateController extends BaseAdminController
 {
     /**
      * @param Request $request

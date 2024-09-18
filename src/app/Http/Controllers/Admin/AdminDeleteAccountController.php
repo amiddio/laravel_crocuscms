@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\AlertColor;
-use App\Http\Controllers\Controller;
 use App\Repositories\Admin\AdminRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class AdminDeleteAccountController extends Controller
+class AdminDeleteAccountController extends BaseAdminController
 {
     public function index(): View
     {
@@ -28,7 +27,12 @@ class AdminDeleteAccountController extends Controller
             return redirect()->route('admin.login');
         }
 
-        self::setAlert(type: AlertColor::ERROR, message: __('An error has occurred deleting your account. Please contact the administrator.'));
+        self::setAlert(
+            type: AlertColor::ERROR,
+            message: __(
+            'An error has occurred deleting your account. Please contact the administrator.'
+        )
+        );
 
         return redirect()->route('admin,delete_account.index');
     }

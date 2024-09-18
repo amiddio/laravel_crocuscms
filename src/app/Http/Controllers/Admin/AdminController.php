@@ -3,19 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\AlertColor;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminCreateRequest;
 use App\Http\Requests\Admin\AdminUpdateRequest;
-use App\Models\Admin\Admin;
 use App\Repositories\Admin\AdminRepository;
 use App\Repositories\Admin\AdminRoleRepository;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class AdminController extends BaseAdminController
 {
 
     /**
@@ -24,7 +22,8 @@ class AdminController extends Controller
     public function __construct(
         protected AdminRepository $adminRepository,
         protected AdminRoleRepository $adminRoleRepository
-    ) {}
+    ) {
+    }
 
     /**
      * Display a listing of the resource.
@@ -128,9 +127,9 @@ class AdminController extends Controller
             self::setAlert(
                 type: AlertColor::SUCCESS,
                 message: __(
-                'The admin \':login\' changed successfully',
-                ['login' => $admin->login]
-            )
+                    'The admin \':login\' changed successfully',
+                    ['login' => $admin->login]
+                )
             );
         }
 
@@ -154,9 +153,9 @@ class AdminController extends Controller
             self::setAlert(
                 type: AlertColor::SUCCESS,
                 message: __(
-                'The admin \':login\' deleted successfully',
-                ['login' => $admin->login]
-            )
+                    'The admin \':login\' deleted successfully',
+                    ['login' => $admin->login]
+                )
             );
         } else {
             self::setAlert(

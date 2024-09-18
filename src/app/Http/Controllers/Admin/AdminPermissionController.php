@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Repositories\Admin\AdminPermissionRepository;
 use App\Repositories\Admin\AdminRoleRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class AdminPermissionController extends Controller
+class AdminPermissionController extends BaseAdminController
 {
 
     public function __construct(
         protected AdminRoleRepository $adminRoleRepository,
         protected AdminPermissionRepository $adminPermissionRepository
-    ) {}
+    ) {
+    }
 
     public function index(Request $request): View
     {
@@ -31,17 +31,10 @@ class AdminPermissionController extends Controller
             $allAdminRoutes = $relatedPermissions = [];
         }
 
-        return view('admin.admin_permission.index',
+        return view(
+            'admin.admin_permission.index',
             compact('roles', 'roleId', 'allAdminRoutes', 'relatedPermissions')
         );
-    }
-
-    public function update(Request $request, int $roleId): RedirectResponse
-    {
-        $role = $this->getRole(roleId: $roleId);
-        $this->adminPermissionRepository->roleSync(role: $role, permissionIds: $request->get('routes'));
-
-        return redirect()->route('admin.admin_permissions', ['role_id' => $roleId]);
     }
 
     private function getRole(int $roleId): \Illuminate\Database\Eloquent\Model
@@ -55,5 +48,13 @@ class AdminPermissionController extends Controller
         }
 
         return $role;
+    }
+
+    public function update(Request $request, int $roleId): RedirectResponse
+    {
+        $role = $this->getRole(roleId: $roleId);
+        $this->adminPermissionRepository->roleSync(role: $role, permissionIds: $request->get('routes'));
+
+        return redirect()->route('admin.admin_permissions', ['role_id' => $roleId]);
     }
 }

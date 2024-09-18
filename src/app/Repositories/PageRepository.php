@@ -20,7 +20,7 @@ class PageRepository extends BaseRepository
      * @param $lang
      * @return null
      */
-    public function getPageByName($pageName, $lang)
+    public function getPageByName($pageName, $lang): ?array
     {
         $columns = ['id', 'name'];
 
@@ -33,6 +33,10 @@ class PageRepository extends BaseRepository
             return null;
         }
 
-        return $page;
+        return [
+            'page' => $page,
+            'lang' => $lang,
+            'translation' => $page->getTranslation($lang),
+        ];
     }
 }
