@@ -54,22 +54,13 @@ Docker, Apache2, PHP 8.1, Laravel 10, MySql 8, Redis, Node.js, Npm, Tailwindcss
 
 ### Screenshots
 
-![Screenshot_1](/screenshots/Screenshot 2024-09-19 145913.png)
-
-![Screenshot_2](/screenshots/Screenshot 2024-09-19 145214.png)
-
-![Screenshot_3](/screenshots/Screenshot 2024-09-19 145246.png)
-
-![Screenshot_4](/screenshots/Screenshot 2024-09-19 145401.png)
-
-![Screenshot_5](/screenshots/Screenshot 2024-09-19 145438.png)
-
-![Screenshot_6](/screenshots/Screenshot 2024-09-19 145520.png)
-
-![Screenshot_7](/screenshots/Screenshot 2024-09-19 145705.png)
-
-![Screenshot_8](/screenshots/Screenshot 2024-09-19 145801.png)
-
-![Screenshot_9](/screenshots/Screenshot 2024-09-19 150104.png)
-
-![Screenshot_10](/screenshots/Screenshot 2024-09-19 150133.png)
+![Screenshot_1](/screenshots/Screenshot_1.png)
+![Screenshot_2](/screenshots/Screenshot_2.png)
+![Screenshot_3](/screenshots/Screenshot_3.png)
+![Screenshot_4](/screenshots/Screenshot_4.png)
+![Screenshot_5](/screenshots/Screenshot_5.png)
+![Screenshot_6](/screenshots/Screenshot_6.png)
+![Screenshot_7](/screenshots/Screenshot_7.png)
+![Screenshot_8](/screenshots/Screenshot_8.png)
+![Screenshot_9](/screenshots/Screenshot_9.png)
+![Screenshot_10](/screenshots/Screenshot_10.png)
